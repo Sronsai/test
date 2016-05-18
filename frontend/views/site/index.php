@@ -4,6 +4,7 @@ use miloschuman\highcharts\Highcharts;
 use kartik\grid\GridView;
 
 $this->title = 'My Yii Application';
+$this->registerJsFile('./js/chart_dial.js');
 ?>
 <div class="site-index">
 
@@ -14,9 +15,8 @@ $this->title = 'My Yii Application';
                 <?php
                 echo Highcharts::widget([
                     'scripts' => [
-                        'highcharts-more', // enables supplementary chart types (gauge, arearange, columnrange, etc.)
-                        'modules/exporting', // adds Exporting button/menu to chart
-                        //'themes/grid', // applies global 'grid' theme to all charts
+                        'highcharts-more',
+                        'modules/exporting',
                         'highcharts-3d',
                     //'modules/drilldown'
                     ]
@@ -110,6 +110,13 @@ $this->title = 'My Yii Application';
             'dataProvider' => $dataProvider,
             'columns' => [
                 [
+                    'class' => 'yii\grid\SerialColumn',
+                    'header' => 'ลำดับ',
+                    'options' => ['width' => '20'],
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                ],
+                [
                     'attribute' => 'subdistname',
                     'header' => 'ตำบล',
                     'options' => ['width' => '100'],
@@ -128,7 +135,7 @@ $this->title = 'My Yii Application';
         ?>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <!-- donut chart -->
         <div class="panel-body">
             <div style="display: none">
@@ -225,7 +232,29 @@ $this->title = 'My Yii Application';
             ?>
         </div>
         <!-- end donut -->
+    </div><br />
+
+    <div class="col-lg-6">
+        <div class="row">
+            <?php
+            $target = 100;
+            $result = 80;
+            $persent = 0.00;
+            if ($target > 0) {
+                $persent = $result / $target * 100;
+                $persent = number_format($persent, 2);
+            }
+            $base = 90;
+            $this->registerJs("
+                        var obj_div=$('#ch1');
+                        gen_dial(obj_div,$base,$persent);
+                    ");
+            ?>
+            <h4>ร้อยละ</h4>
+            <div id="ch1"></div>
+        </div>
     </div>
+</div>
 
 
 </div>
