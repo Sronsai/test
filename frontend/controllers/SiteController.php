@@ -79,7 +79,8 @@ class SiteController extends Controller {
                 LEFT JOIN hdc.co_subdistrict s ON s.subdistid = o.subdistid
                 WHERE p.DISCHARGE = '9' AND p.NATION = '099'
                 AND p.TYPEAREA IN(1,3) AND s.distid=4203
-                GROUP BY o.subdistid";
+                GROUP BY o.subdistid
+		ORDER BY human DESC";
 
         $rawData = Yii::$app->db->createCommand($sql)->queryAll();
         $main_Data = [];
@@ -99,7 +100,8 @@ class SiteController extends Controller {
                 LEFT JOIN hdc.co_subdistrict s ON s.subdistid = o.subdistid
                 WHERE p.DISCHARGE = '9' AND p.NATION = '099'
                 AND p.TYPEAREA IN(1,3) AND s.distid=4203
-                GROUP BY o.subdistid";
+                GROUP BY o.subdistid
+		ORDER BY human DESC";
 
         try {
             $rawData = \Yii::$app->db->createCommand($sql_grid)->queryAll();
